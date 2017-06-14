@@ -24,8 +24,8 @@ function createElement(vnode, opts) {
         }
         return null
     }
-console.log(vnode.tagName);
-    var node = new tabris[vnode.tagName](); 
+
+    var node = new (vnode.tag)(); 
 
     var props = vnode.properties
     applyProperties(node, props)

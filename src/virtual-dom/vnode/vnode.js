@@ -9,8 +9,9 @@ module.exports = VirtualNode
 var noProperties = {}
 var noChildren = []
 
-function VirtualNode(tagName, properties, children, key, namespace) {
-    this.tagName = tagName
+function VirtualNode(tag, properties, children, key, namespace) {
+    this.tag=tag;
+    this.tagName = tag.name;
     this.properties = properties || noProperties
     this.children = children || noChildren
     this.key = key != null ? String(key) : undefined

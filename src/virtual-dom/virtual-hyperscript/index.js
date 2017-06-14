@@ -18,15 +18,14 @@ module.exports = h;
 
 function h(widgetConstructor, properties, ...children) {
     var childNodes = [];
-    var tag, props, key, namespace;
+    var  props, key, namespace;
 
     if (!children && isChildren(properties)) {
         children = properties;
         props = {};
     }
 
-    props = props || properties || {};
-    tag = parseTag(widgetConstructor, props);
+    props = props || properties || {}; 
 
     // support keys
     if (props.hasOwnProperty('key')) {
@@ -40,34 +39,14 @@ function h(widgetConstructor, properties, ...children) {
         props.namespace = undefined;
     }
 
-    // fix cursor bug
-    if (tag === 'INPUT' &&
-        !namespace &&
-        props.hasOwnProperty('value') &&
-        props.value !== undefined &&
-        !isHook(props.value)
-    ) {
-        if (props.value !== null && typeof props.value !== 'string') {
-            throw UnsupportedValueType({
-                expected: 'String',
-                received: typeof props.value,
-                Vnode: {
-                    tagName: tag,
-                    properties: props
-                }
-            });
-        }
-        props.value = softSetHook(props.value);
-    }
-
     transformProperties(props);
 
     if (children !== undefined && children !== null) {
-        addChild(children, childNodes, tag, props);
+        addChild(children, childNodes, widgetConstructor, props);
     }
 
 
-    return new VNode(tag, props, childNodes, key, namespace);
+    return new VNode(widgetConstructor, props, childNodes, key, namespace);
 }
 
 function addChild(c, childNodes, tag, props) {
@@ -87,7 +66,7 @@ function addChild(c, childNodes, tag, props) {
         throw UnexpectedVirtualElement({
             foreignObject: c,
             parentVnode: {
-                tagName: tag,
+                tagName: tag.name,
                 properties: props
             }
         });
