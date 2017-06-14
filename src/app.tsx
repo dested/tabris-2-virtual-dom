@@ -1,30 +1,18 @@
 import { ui, Button, TextView, ScrollView, Composite } from 'tabris';
+import { Something } from './Something';
 import * as virtualDom from './virtual-dom/index';
 
 
-export class Something extends Composite {
-
-    constructor() {
-        super({ left: 0, right: 0, top: 0, height: 100, background: '#ff0000' });
-        this.append(new TextView({ left: 0, right: 0, text: 'something' }));
-    }
-
-}
-
-
 var h = virtualDom.h;
-var diff = virtualDom.diff;
-var patch = virtualDom.patch;
-var createElement = virtualDom.create;
 
 
 function render(theMessage, foo) {
     return (
         <Composite left="0" right="0" top="0" bottom="0">
-            <Something></Something>
+            <Something message={`cool ${foo}`}></Something>
             <Button on-select={() => ui.contentView.find('#bar').set('text', 'Tabris.js rocks!')} centerX="0" top="100" text={theMessage}></Button>
             <ScrollView top="prev()" bottom="0" left="0" right="0">
-                <TextView id="bar" centerX="0" top="prev() 50" font="24px" text="yah"></TextView>
+                <TextView id="bar" centerX="0" top="prev() 50" font="24px" text="Not sure..."></TextView>
                 <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
                 <TextView centerX="0" top="prev() 50" font="24px" text={foo + 1}></TextView>
                 <TextView centerX="0" top="prev() 50" font="24px" text={foo + 2}></TextView>
@@ -47,27 +35,19 @@ function render(theMessage, foo) {
 
 var count = 0;
 
-var tree = render("The message", 12);
-var rootNode = createElement(tree);
+var tree = render("Does Tabris.JS Rock?", 12);
+var rootNode = virtualDom.create(tree);
 rootNode.appendTo(ui.contentView);
 
 
 setInterval(() => {
     count++;
 
-    var newTree = render("The MEssage" + count, count);
-    var patches = diff(tree, newTree);
-    rootNode = patch(rootNode, patches);
+    var newTree = render(`Does Tabris.JS Rock ${count} Times?`, count);
+    var patches = virtualDom.diff(tree, newTree);
+    rootNode = virtualDom.patch(rootNode, patches);
     tree = newTree;
 
 
 }, 1);
 
-
-
-/*let m = (
-  <Composite left="0" right="0" top="0" bottom="0">
-    <Button on-select={() => ui.contentView.find('#bar').set('text', 'Tabris.js rocks!')} centerX="0" top="100" text="Show Message"></Button>
-    <TextView id="bar" centerX="0" top="prev() 50" font="24px"></TextView>
-  </Composite>
-).appendTo(ui.contentView);*/
