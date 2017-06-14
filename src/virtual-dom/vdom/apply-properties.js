@@ -9,18 +9,17 @@ function applyProperties(node, props, previous) {
 
         if (propValue === undefined) {
             removeProperty(node, propName, propValue, previous);
-        } else if (isHook(propValue)) {
-            removeProperty(node, propName, propValue, previous)
-            if (propValue.hook) {
-                propValue.hook(node,
-                    propName,
-                    previous ? previous[propName] : undefined)
-            }
         } else {
             if (isObject(propValue)) {
                 patchObject(node, props, previous, propName, propValue);
             } else {
-                node[propName] = propValue
+                if (propName.indexOf("on-") == 0) {
+                    node.on(propName.substr(3), propValue);
+                } else if (propName.indexOf("once-") == 0) {
+                    node.once(propName.substr(5), propValue);
+                } else {
+                    node[propName] = propValue
+                }
             }
         }
     }
@@ -28,31 +27,13 @@ function applyProperties(node, props, previous) {
 
 function removeProperty(node, propName, propValue, previous) {
     if (previous) {
-        var previousValue = previous[propName]
-
-        if (!isHook(previousValue)) {
-            if (propName === "attributes") {
-                for (var attrName in previousValue) {
-                    node.removeAttribute(attrName)
-                }
-            } else if (propName === "style") {
-                for (var i in previousValue) {
-                    node.style[i] = ""
-                }
-            } else if (typeof previousValue === "string") {
-                node[propName] = ""
-            } else {
-                node[propName] = null
-            }
-        } else if (previousValue.unhook) {
-            previousValue.unhook(node, propName, propValue)
-        }
+        node[propName] = null
     }
 }
 
 function patchObject(node, props, previous, propName, propValue) {
     var previousValue = previous ? previous[propName] : undefined
-
+    console.log('patch', propName, propValue);
     // Set attributes
     if (propName === "attributes") {
         for (var attrName in propValue) {
@@ -68,7 +49,7 @@ function patchObject(node, props, previous, propName, propValue) {
         return
     }
 
-    if(previousValue && isObject(previousValue) &&
+    if (previousValue && isObject(previousValue) &&
         getPrototype(previousValue) !== getPrototype(propValue)) {
         node[propName] = propValue
         return

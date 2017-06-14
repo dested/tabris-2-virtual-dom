@@ -1,4 +1,4 @@
-
+/*
 import * as virtualDom from './virtual-dom/index';
 
 var h = virtualDom.h;
@@ -32,4 +32,4 @@ window.JSX = {
 
 window.JSX = {
   createElement: h
-};
+}; */

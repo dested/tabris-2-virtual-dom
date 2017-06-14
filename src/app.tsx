@@ -16,19 +16,20 @@ function render(theMessage, foo) {
         <Composite left="0" right="0" top="0" bottom="0">
             <Button on-select={() => ui.contentView.find('#bar').set('text', 'Tabris.js rocks!')} centerX="0" top="100" text={theMessage}></Button>
             <ScrollView top="prev()" bottom="0" left="0" right="0">
+                <TextView id="bar" centerX="0" top="prev() 50" font="24px" text="yah"></TextView>
                 <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
-                <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
-                <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
-                <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
-                <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
-                <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
-                <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
-                <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
-                <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
-                <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
-                <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
-                <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
-                <TextView centerX="0" top="prev() 50" font="24px" text={foo}></TextView>
+                <TextView centerX="0" top="prev() 50" font="24px" text={foo+1}></TextView>
+                <TextView centerX="0" top="prev() 50" font="24px" text={foo+2}></TextView>
+                <TextView centerX="0" top="prev() 50" font="24px" text={foo+3}></TextView>
+                <TextView centerX="0" top="prev() 50" font="24px" text={foo+4}></TextView>
+                <TextView centerX="0" top="prev() 50" font="24px" text={foo+5}></TextView>
+                <TextView centerX="0" top="prev() 50" font="24px" text={foo+6}></TextView>
+                <TextView centerX="0" top="prev() 50" font="24px" text={foo+7}></TextView>
+                <TextView centerX="0" top="prev() 50" font="24px" text={foo+8}></TextView>
+                <TextView centerX="0" top="prev() 50" font="24px" text={foo+9}></TextView>
+                <TextView centerX="0" top="prev() 50" font="24px" text={foo+10}></TextView>
+                <TextView centerX="0" top="prev() 50" font="24px" text={foo+11}></TextView>
+                <TextView centerX="0" top="prev() 50" font="24px" text={foo+12}></TextView>
             </ScrollView>
         </Composite>
     );
